@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aprende Lógica y Hardware</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #1e40af;
+            --accent: #10b981;
+            --bg: #f3f4f6;
+            --text: #1f2937;
+            --white: #ffffff;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        
+        body { background-color: var(--bg); color: var(--text); line-height: 1.6; }
+
+        /* Header */
+        header { background: var(--primary); color: var(--white); padding: 2rem 1rem; text-align: center; }
+        header h1 { margin-bottom: 0.5rem; }
+
+        /* Layout */
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+        section { background: var(--white); margin-bottom: 2rem; padding: 2rem; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        
+        h2 { color: var(--secondary); border-bottom: 2px solid var(--bg); padding-bottom: 10px; margin-bottom: 20px; }
+        h3 { color: var(--primary); margin-top: 15px; }
+
+        /* Interactive Console */
+        .console-box { background: #1e1e1e; color: #00ff00; padding: 15px; border-radius: 5px; font-family: 'Courier New', monospace; margin-top: 10px; min-height: 100px; white-space: pre-wrap; }
+        .input-code { width: 100%; height: 100px; background: #2d2d2d; color: white; border: 1px solid #444; padding: 10px; font-family: monospace; margin-bottom: 10px; }
+        .btn { background: var(--primary); color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; font-weight: bold; transition: 0.3s; }
+        .btn:hover { background: var(--secondary); }
+        .btn-success { background: var(--accent); }
+
+        /* Activities Grid */
+        .activities-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .card { background: #f8fafc; border: 1px solid #e2e8f0; padding: 15px; border-radius: 8px; }
+        
+        /* Quiz Styles */
+        .quiz-container { display: none; }
+        .quiz-active { display: block; }
+        .question-box { margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 20px; }
+        .option-label { display: block; padding: 8px; cursor: pointer; transition: 0.2s; margin: 5px 0; background: #f1f5f9; border-radius: 4px; }
+        .option-label:hover { background: #e2e8f0; }
+        input[type="radio"] { margin-right: 10px; }
+        
+        #quiz-result { font-size: 1.2rem; font-weight: bold; margin-top: 20px; text-align: center; color: var(--primary); }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            section { padding: 1rem; }
+            header { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Iniciación a la Programación y Hardware</h1>
+    <p>Aprende Pseudocódigo, Lógica y demuestra tus conocimientos</p>
+</header>
+
+<div class="container">
+
+    <section id="theory">
+        <h2>¿Qué es el Pseudocódigo?</h2>
+        <p>El pseudocódigo es una forma de expresar los distintos pasos que va a realizar un programa de la forma más parecida a un lenguaje de programación. Su principal característica es el omitir detalles de sintaxis para centrarse en la <strong>lógica</strong>.</p>
+        
+        <h3>Estructura Básica</h3>
+        <ul>
+            <li><strong>Inicio / Fin:</strong> Delimitan el algoritmo.</li>
+            <li><strong>Escribir:</strong> Muestra datos en pantalla.</li>
+            <li><strong>Leer:</strong> Recibe datos del usuario.</li>
+            <li><strong>Si / Entonces:</strong> Toma decisiones lógicas.</li>
+        </ul>
+
+        <div class="card" style="margin-top: 20px; border-left: 5px solid var(--accent);">
+            <h4>💡 Dato Curioso</h4>
+            <p>El primer programador de la historia fue una mujer: <strong>Ada Lovelace</strong>. Escribió el primer algoritmo destinado a ser procesado por una máquina a mediados del siglo XIX.</p>
+        </div>
+    </section>
+
+    <section>
+        <h2>1. Práctica: Tu Primer "Hola Mundo"</h2>
+        <p>He creado un pequeño intérprete para ti. Usa el comando <code>escribir "tu mensaje"</code> para ver el resultado.</p>
+        <textarea id="codeArea" class="input-code" placeholder='Ejemplo:
+escribir "Hola soy nuevo programando"
+escribir "El hardware es genial"'></textarea>
+        <button class="btn" onclick="runPseudo()">Ejecutar Código</button>
+        <div id="consoleOutput" class="console-box">// El resultado aparecerá aquí...</div>
+    </section>
+
+    <section>
+        <h2>Zona de Entrenamiento Lógico</h2>
+        <div class="activities-grid">
+            
+            <div class="card">
+                <h3>2. Lógica: Algoritmo del Café</h3>
+                <p>Ordena los pasos lógicamente (mentalmente) y verifica:</p>
+                <ol style="margin-left:20px; margin-bottom:10px;">
+                    <li>Servir en taza</li>
+                    <li>Calentar agua</li>
+                    <li>Poner café en el filtro</li>
+                </ol>
+                <select id="coffeeOrder" style="width:100%; padding:5px; margin-bottom:10px;">
+                    <option value="0">Selecciona el orden correcto</option>
+                    <option value="wrong">1 - 3 - 2</option>
+                    <option value="correct">2 - 3 - 1</option>
+                    <option value="wrong">3 - 1 - 2</option>
+                </select>
+                <button class="btn" style="width:100%" onclick="checkCoffee()">Verificar</button>
+                <p id="coffeeResult" style="margin-top:5px; font-weight:bold;"></p>
+            </div>
+
+            <div class="card">
+                <h3>3. Hardware: Traductor Binario</h3>
+                <p>Las computadoras solo entienden 0 y 1. Escribe un número decimal (0-255) para ver su valor en "lenguaje máquina".</p>
+                <input type="number" id="decimalInput" placeholder="Ej: 10" style="padding:5px; width:100px;">
+                <button class="btn" onclick="toBinary()">Convertir</button>
+                <p id="binaryResult" style="font-family:monospace; font-size:1.5rem; color:var(--accent); margin-top:10px;">00000000</p>
+            </div>
+
+            <div class="card">
+                <h3>4. Simulador de Red (Ping)</h3>
+                <p>Simula el envío de paquetes a un servidor.</p>
+                <button class="btn btn-success" onclick="simulatePing()">Hacer Ping a 8.8.8.8</button>
+                <div id="pingOutput" style="font-size:0.8rem; margin-top:10px; color: #333;">Esperando...</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="exam-section">
+        <h2>Examen de Certificación: Hardware y Redes</h2>
+        <p>Este cuestionario seleccionará <strong>10 preguntas aleatorias</strong> de nuestro banco de 50 preguntas.</p>
+        
+        <div id="start-screen">
+            <button class="btn" onclick="startQuiz()" style="font-size: 1.2rem; padding: 15px 30px;">Iniciar Examen</button>
+        </div>
+
+        <div id="quiz-container" class="quiz-container">
+            <div id="quiz-questions"></div>
+            <button class="btn" onclick="calculateScore()" style="margin-top:20px;">Finalizar y Ver Calificación</button>
+        </div>
+        
+        <div id="quiz-result"></div>
+    </section>
+
+</div>
+
+<script>
+    /* --- LÓGICA DEL INTÉRPRETE DE PSEUDOCÓDIGO --- */
+    function runPseudo() {
+        const code = document.getElementById('codeArea').value;
+        const outputDiv = document.getElementById('consoleOutput');
+        const lines = code.split('\n');
+        outputDiv.innerHTML = ''; // Limpiar
+
+        lines.forEach(line => {
+            line = line.trim();
+            if (line.toLowerCase().startsWith('escribir')) {
+                // Extraer lo que está entre comillas
+                const match = line.match(/"([^"]+)"/);
+                if (match) {
+                    outputDiv.innerHTML += '> ' + match[1] + '<br>';
+                } else {
+                    outputDiv.innerHTML += '<span style="color:red">> Error de sintaxis: Usa comillas.</span><br>';
+                }
+            } else if (line !== '') {
+                outputDiv.innerHTML += '<span style="color:gray">> Comando no reconocido (prueba: escribir "texto")</span><br>';
+            }
+        });
+    }
+
+    /* --- ACTIVIDADES EXTRA --- */
+    function checkCoffee() {
+        const val = document.getElementById('coffeeOrder').value;
+        const res = document.getElementById('coffeeResult');
+        if(val === 'correct') {
+            res.style.color = 'green';
+            res.innerText = "¡Correcto! Lógica impecable.";
+        } else {
+            res.style.color = 'red';
+            res.innerText = "Intenta de nuevo. Primero necesitas agua caliente.";
+        }
+    }
+
+    function toBinary() {
+        const num = parseInt(document.getElementById('decimalInput').value);
+        if(!isNaN(num)) {
+            document.getElementById('binaryResult').innerText = num.toString(2).padStart(8, '0');
+        }
+    }
+
+    function simulatePing() {
+        const out = document.getElementById('pingOutput');
+        out.innerHTML = "Enviando paquetes a 8.8.8.8 con 32 bytes de datos...";
+        setTimeout(() => out.innerHTML += "<br>Respuesta desde 8.8.8.8: bytes=32 tiempo=24ms TTL=116", 800);
+        setTimeout(() => out.innerHTML += "<br>Respuesta desde 8.8.8.8: bytes=32 tiempo=26ms TTL=116", 1600);
+        setTimeout(() => out.innerHTML += "<br>Respuesta desde 8.8.8.8: bytes=32 tiempo=25ms TTL=116<br><strong>Paquetes: enviados = 3, recibidos = 3, perdidos = 0</strong>", 2400);
+    }
+
+    /* --- BANCO DE PREGUNTAS (50 items) --- */
+    const questionBank = [
+        // Hardware Básico
+        { q: "¿Qué componente es considerado el cerebro de la computadora?", options: ["Disco Duro", "CPU", "RAM", "Fuente de Poder"], a: 1 },
+        { q: "¿Qué significan las siglas RAM?", options: ["Read Access Memory", "Random Access Memory", "Run Active Module", "Rapid Action Mode"], a: 1 },
+        { q: "¿Qué tipo de almacenamiento es volátil?", options: ["HDD", "SSD", "ROM", "RAM"], a: 3 },
+        { q: "¿Cuál es la función de la GPU?", options: ["Procesar gráficos", "Almacenar archivos", "Conectar a internet", "Enfriar el equipo"], a: 0 },
+        { q: "¿Qué componente suministra energía eléctrica a la PC?", options: ["Motherboard", "CPU", "Fuente de Poder (PSU)", "Regulador"], a: 2 },
+        { q: "¿Dónde se conectan directamente todos los componentes internos?", options: ["Gabinete", "Placa Madre (Motherboard)", "Disco Duro", "Monitor"], a: 1 },
+        { q: "¿Qué es un SSD?", options: ["Solid State Drive", "Super Speed Data", "System Storage Disk", "Serial Slot Device"], a: 0 },
+        { q: "¿Qué puerto se usa comúnmente para conectar monitores modernos?", options: ["PS/2", "HDMI", "Jack 3.5mm", "Ethernet"], a: 1 },
+        { q: "¿Cuál es la unidad mínima de información en una computadora?", options: ["Byte", "Bit", "Megabyte", "Pixel"], a: 1 },
+        { q: "¿Cuántos bits forman un Byte?", options: ["4", "16", "8", "10"], a: 2 },
+        { q: "¿Qué sistema numérico utilizan las computadoras internamente?", options: ["Decimal", "Hexadecimal", "Binario", "Octal"], a: 2 },
+        { q: "¿Qué es la BIOS?", options: ["Un virus", "Software de ofimática", "Sistema Básico de Entrada/Salida", "Un tipo de memoria RAM"], a: 2 },
+        { q: "¿Qué componente ayuda a disipar el calor del procesador?", options: ["Disipador/Cooler", "Tarjeta de red", "Capacitor", "Chipset"], a: 0 },
+        { q: "¿Qué es un periférico de entrada?", options: ["Monitor", "Impresora", "Teclado", "Parlantes"], a: 2 },
+        { q: "¿Qué es un periférico de salida?", options: ["Mouse", "Escáner", "Micrófono", "Monitor"], a: 3 },
+        { q: "¿La memoria ROM es de solo lectura?", options: ["Verdadero", "Falso", "A veces", "Solo en laptops"], a: 0 },
+        { q: "¿Qué significa Hz en un procesador?", options: ["Hertz (Ciclos por segundo)", "Horas de batería", "Heat zones", "Hardware zoom"], a: 0 },
+        { q: "¿Qué cable se usa para redes cableadas?", options: ["HDMI", "UTP (RJ45)", "VGA", "USB"], a: 1 },
+        { q: "¿Qué es el Overclocking?", options: ["Limpiar la PC", "Aumentar la velocidad del reloj del componente", "Apagar la PC bruscamente", "Instalar Windows"], a: 1 },
+        { q: "¿Qué es un Driver?", options: ["Un conductor de Uber", "Un destornillador", "Software que controla un hardware", "Un tipo de virus"], a: 2 },
+        
+        // Redes
+        { q: "¿Qué significan las siglas LAN?", options: ["Local Area Network", "Long Area Network", "Latin American Network", "Line Access Node"], a: 0 },
+        { q: "¿Qué significan las siglas WAN?", options: ["Wide Area Network", "Wireless Access Node", "Web Area Network", "World Access Net"], a: 0 },
+        { q: "¿Qué dispositivo dirige el tráfico entre diferentes redes?", options: ["Hub", "Switch", "Router", "Repetidor"], a: 2 },
+        { q: "¿Qué dispositivo conecta dispositivos dentro de una misma red local?", options: ["Router", "Switch", "Modem", "Firewall"], a: 1 },
+        { q: "¿Qué es una dirección IP?", options: ["Un código postal", "Identificador lógico de un dispositivo en red", "La marca del router", "La contraseña del WiFi"], a: 1 },
+        { q: "¿Qué es una dirección MAC?", options: ["Una dirección de Apple", "Identificador físico único de la tarjeta de red", "Un protocolo de correo", "Software de seguridad"], a: 1 },
+        { q: "¿Qué protocolo se usa para navegar páginas web seguras?", options: ["FTP", "HTTP", "HTTPS", "SMTP"], a: 2 },
+        { q: "¿Qué capa del modelo OSI es la Capa 1?", options: ["Física", "Enlace de datos", "Red", "Aplicación"], a: 0 },
+        { q: "¿Qué hace el servidor DNS?", options: ["Asigna IPs", "Traduce nombres de dominio a IPs", "Bloquea virus", "Acelera internet"], a: 1 },
+        { q: "¿Qué es el Ping?", options: ["Un juego", "Una utilidad para comprobar conectividad", "Un virus", "Un navegador"], a: 1 },
+        { q: "¿Qué significa WLAN?", options: ["Wired LAN", "Wireless LAN", "Web LAN", "World LAN"], a: 1 },
+        { q: "¿Qué es el ancho de banda?", options: ["El grosor del cable", "La cantidad de datos que pueden transmitirse en un tiempo", "El peso del router", "La distancia del WiFi"], a: 1 },
+        { q: "¿Qué topología de red conecta todos los nodos a un punto central?", options: ["Bus", "Anillo", "Estrella", "Malla"], a: 2 },
+        { q: "¿Qué es un Firewall?", options: ["Un muro físico", "Sistema de seguridad de red", "Un programa para quemar CDs", "Un tipo de cable ignífugo"], a: 1 },
+        { q: "¿Qué protocolo se usa para enviar correos electrónicos?", options: ["POP3", "HTTP", "SMTP", "FTP"], a: 2 },
+        { q: "¿Qué es DHCP?", options: ["Protocolo que asigna IPs automáticamente", "Un tipo de disco duro", "Un lenguaje de programación", "Un conector de video"], a: 0 },
+        { q: "¿Cuál es la IP de loopback (localhost)?", options: ["192.168.1.1", "127.0.0.1", "8.8.8.8", "255.255.255.0"], a: 1 },
+        { q: "¿Qué es fibra óptica?", options: ["Cable de cobre", "Medio de transmisión por luz", "Conexión satelital", "Ondas de radio"], a: 1 },
+        { q: "¿Qué es la latencia?", options: ["Velocidad de descarga", "Tiempo de retardo en la red", "Ancho de banda", "Pérdida de datos"], a: 1 },
+        { q: "¿Qué es un ISP?", options: ["Internet Service Provider", "Internal System Port", "Intelligent Serial Protocol", "International Socket Port"], a: 0 },
+        { q: "¿Qué capa del modelo OSI maneja el enrutamiento (IP)?", options: ["Capa 2", "Capa 3 (Red)", "Capa 4", "Capa 7"], a: 1 },
+        { q: "¿Qué comando muestra la configuración IP en Windows?", options: ["ifconfig", "ipconfig", "ping", "tracert"], a: 1 },
+        { q: "¿Qué es el WiFi 6?", options: ["Un modelo de router", "La sexta generación del estándar inalámbrico 802.11ax", "6 antenas", "Internet de 6GB"], a: 1 },
+        { q: "¿Qué es una VPN?", options: ["Virtual Private Network", "Visual Public Node", "Virus Protection Net", "Virtual Port Number"], a: 0 },
+        { q: "¿Qué significa IoT?", options: ["Input of Text", "Internet of Things", "Internal or Terminal", "Image on TV"], a: 1 },
+        { q: "¿Qué puerto usa HTTP por defecto?", options: ["80", "443", "21", "25"], a: 0 },
+        { q: "¿Qué puerto usa HTTPS por defecto?", options: ["80", "443", "22", "8080"], a: 1 },
+        { q: "¿Qué es un Servidor?", options: ["Un usuario", "Una computadora que provee servicios a clientes", "Un cable", "Un switch"], a: 1 },
+        { q: "¿Qué es el modelo TCP/IP?", options: ["Un antivirus", "La arquitectura de protocolos de Internet", "Una marca de router", "Un tipo de cableado"], a: 1 },
+        { q: "¿Cuál es la ventaja de la red 5G?", options: ["Mayor latencia", "Menor velocidad", "Mayor velocidad y menor latencia", "Más cables"], a: 2 }
+    ];
+
+    /* --- LÓGICA DEL QUIZ --- */
+    let currentQuestions = [];
+
+    function startQuiz() {
+        // 1. Ocultar botón de inicio, mostrar quiz
+        document.getElementById('start-screen').style.display = 'none';
+        document.getElementById('quiz-container').classList.add('quiz-active');
+
+        // 2. Seleccionar 10 preguntas aleatorias
+        // Algoritmo Fisher-Yates shuffle simplificado
+        const shuffled = [...questionBank].sort(() => 0.5 - Math.random());
+        currentQuestions = shuffled.slice(0, 10);
+
+        // 3. Renderizar preguntas
+        const container = document.getElementById('quiz-questions');
+        container.innerHTML = '';
+
+        currentQuestions.forEach((item, index) => {
+            let optionsHTML = '';
+            item.options.forEach((opt, optIndex) => {
+                optionsHTML += `
+                    <label class="option-label">
+                        <input type="radio" name="q${index}" value="${optIndex}">
+                        ${opt}
+                    </label>
+                `;
+            });
+
+            container.innerHTML += `
+                <div class="question-box">
+                    <p><strong>${index + 1}. ${item.q}</strong></p>
+                    ${optionsHTML}
+                </div>
+            `;
+        });
+    }
+
+    function calculateScore() {
+        let score = 0;
+        let unanswered = 0;
+
+        currentQuestions.forEach((item, index) => {
+            const selected = document.querySelector(`input[name="q${index}"]:checked`);
+            if (selected) {
+                if (parseInt(selected.value) === item.a) {
+                    score++;
+                }
+            } else {
+                unanswered++;
+            }
+        });
+
+        const resultDiv = document.getElementById('quiz-result');
+        
+        if (unanswered > 0) {
+            if(!confirm(`Te faltan responder ${unanswered} preguntas. ¿Quieres finalizar igual?`)) {
+                return;
+            }
+        }
+
+        // Mostrar resultado y deshabilitar inputs
+        resultDiv.innerHTML = `Tu puntuación es: ${score} / 10`;
+        
+        if(score >= 8) resultDiv.innerHTML += " <br>🏆 ¡Excelente! Eres un experto.";
+        else if(score >= 5) resultDiv.innerHTML += " <br>👍 Buen trabajo, pero puedes mejorar.";
+        else resultDiv.innerHTML += " <br>📚 Necesitas repasar más.";
+
+        // Deshabilitar formulario
+        const radios = document.querySelectorAll('input[type="radio"]');
+        radios.forEach(r => r.disabled = true);
+        
+        // Botón reiniciar
+        resultDiv.innerHTML += `<br><button class="btn" onclick="location.reload()" style="margin-top:15px">Intentar de Nuevo</button>`;
+    }
+</script>
+
+</body>
+</html>
